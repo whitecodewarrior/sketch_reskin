@@ -1,0 +1,20 @@
+body {
+	padding-top: 110px;
+}
+
+body .container {
+	padding-bottom: 0 !important;
+}
+#logo-image-big {
+	height: 80px;
+}
+
+.navbar.navbar-fixed-top li {
+	border-right: none;
+}
+
+.btn-light-blue {
+    background-color: transparent;
+    color: #5bc0de;
+    border-color: #46b8da;
+}

@@ -22,7 +22,6 @@
     <link href="css/jquery.multiSelect.css" rel="stylesheet" />
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/gateway.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -44,75 +43,166 @@
     
 </head>
 <body>
-    <nav id="header" class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button id="btn-navbar" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand">
-                    <a class="pull-left" rel="home" href="#" title="GWPC" id="gwpclogo">
-                        <img id="logo-image-big" alt="" src="images/logo.png" />
-                    </a>
-                    <div class="logo-text pull-right">GWPC | RBDMS<br/>National Oil & GAS<br/>Gateway</div>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <a class="pull-left" rel="home" href="#" title="GWPC" id="gwpclogo">
+                            <img id="logo-image" alt="" src="images/logo.png" />
+                        </a>
+                        <p class="logo-text">GWPC | RBDMS<br />National Oil & Gas Gateway</p>
+                    </div>
+                    <button id="btn-navbar" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
-                 
-            </div>
-            <!--  Collec the menus for toggling -->
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul id="navbarUl" class="nav navbar-nav navbar-right">
-                    <li id="li-chrome"><a href="Home/Index" class="mainmenu_back">Home</a></li>
-                    <li><a href="#" class="mainmenu_back">Map</a></li>
-                    <li><a href="#" class="mainmenu_back">List</a></li>
-                    <li><a href="#" class="mainmenu_back">About</a></li>
-                    <li><a href="#" class="mainmenu_back">Contact Us</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#loginModal" id="href_login" class="btn btn-info mainmenu_back">Log In</a></li>
-                    <li><a href="#" class="mainmenu_back" id="link_chngpass" style="display:none" data-toggle="modal" data-target="#chgPassModal">Change Password</a></li>
-                </ul>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul id="navbarUl" class="nav navbar-nav navbar-right header-menu-on-small header-menu-on-big">
+                        <li class="header-menu-li-on-small header-menu-first-li-on-small" id="li-chrome"><a href="Home/Index" class="mainmenu_back">HOME</a></li>
+                        <li class="header-menu-li-on-small dropdown" id="liTools">
+                            <a href="#" class="dropdown-toggle mainmenu_back" data-toggle="dropdown" role="button" aria-expanded="false"><span class="dropdown-on-small" id="spanTools">TOOLS </span><span class="caret"></span></a>
+                            <div class="dropdown-menu horizontaladjust" role="menu" id="divTools" onmouseover="divToolsMouseOver();" onmouseout="divToolsMouseOut();">
+                                <table class="toolsonbig">
+                                    <tr>
+                                        <td style="min-width: 230px;"></td>
+                                        <td class="nav-link-header"><p class="nav-link-header-text">DATA VIEWS</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h3>Map View</h3><p style="font-size:16px">Text describing the Map View page and functionality</p></td>
+                                        <td class="views-icon-and-text"><img alt="" src= "images/map-view.png"><a href="Home/MapView" style="font-size: 18px;">Map View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h3>Data View</h3><p style="font-size:16px">Text describing the Data View page and functionality</p></td>
+                                        <td class="views-icon-and-text"><img alt="" src= "images/data-view.png"><a href="Home/DataView" style="font-size: 18px;">Data View</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <ul class="nav toolsonsmall header-sub-menu-on-small">
+                                <li class="header-menu-li-on-small"><a href ="Home/MapView" class="mainmenu_back"><p class="tab-on-small">Map View</p></a></li>
+                                <li class="header-menu-li-on-small"><a href="Home/DataView" class="mainmenu_back"><p class="tab-on-small">Data View</p></a></li>
+                            </ul>
+                        </li>
+                        <li class="header-menu-li-on-small"><a href="#" class="mainmenu_back">ABOUT</a></li>
+                        <li class="header-menu-li-on-small"><a href="#" class="mainmenu_back">CONTACT US</a></li>
+                        <li class="header-menu-li-on-small"><a href="#" data-toggle="modal" data-target="#loginModal" id="href_login" class="mainmenu_back">LOG IN</a></li>
+                        <li class="header-menu-li-on-small"><a href="#" class="mainmenu_back" id="link_chngpass" style="display:none" data-toggle="modal" data-target="#chgPassModal">Change Password</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+        <div>
+            
+
+
+<div class="container">
+  
+  
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group map-toolbar">
+                    <button id="btnMove" type="button" onclick="javascript: arby.setDefaultTool(); return null;" class="btn btn-maptool ui-icon-move" aria-label=""></button>
+                    <button id="btnSelect" type="button" onclick="javascript: arby.activateSelectControl(['Wells Selection'], 'wellSelectionControl'); arby.setTooltip(false); return null;" class="btn btn-maptool ui-icon-select" aria-label=""></button>
+                    <button id="btnZoomFull" type="button" onclick="javascript: zoomFull(); return null;" class="btn btn-maptool ui-icon-zoomfull" aria-label=""></button>
+                    <button id="btnSelectRect" type="button" onclick="javascript: arby.activateSelectControl(['Wells Selection'], 'wmsGetFeatureControl'); arby.setTooltip(false); return null;" class="btn btn-maptool ui-icon-selectrect" aria-label=""></button>
+                    <button id="btnSelectPoly" type="button" onclick="javascript: arby.activateSelectControl(['Wells Selection'], 'polySelectControl'); arby.setTooltip(false); return null;" class="btn btn-maptool ui-icon-selectpoly" aria-label=""></button>
+                    <button id="btnClearFilt" type="button" onclick="javascript: clearSelection(); return null;" class="btn btn-maptool ui-icon-deselect" aria-label=""></button>
+                    <div id="selectioninfo"></div>
+                </div>
             </div>
         </div>
-    </nav>
-    <div id="main" class="container-fluid">
-        <div class="row">
-            Main Content Will be soon...
+        <div class="col-sm-6">
+            <a class="btn btn-default btn-sm" href="Home/DataView" role="button">DATA VIEW</a>
+            <!--<a class="btn btn-danger btn-sm" href="#" role="button">GUIDE ME</a>-->
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#wizardModal">GUIDE ME</button>
+            <div id="loading">loading</div>
+            <div id="progressbar"></div>
         </div>
     </div>
-    <div class="container" id="footer">
-        <footer class="row">
-            <div class="col-md-6">
+    <div class="row content-area">
+        <div class="col-sm-12 olMap-container">
+            <div id="olMap"></div>
+        </div>
+        <div class="row totals-area" >
+            <div class="col-sm-9" style="width:100%; margin-left:30px">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h4>TOTAL<br/>WELLS</h4>
-                        <p>9,637,560</p>
+                    <div class="col-sm-10">
+                        <div class="row bottom-panel-left" style="border-bottom:solid; border-bottom-color:lightgray; height:34px;">
+                            <div class="col-sm-9">
+                                <b>TOTALS</b>
+                            </div>
+                            <div class="col-sm-3">
+                                <!--<a class="btn btn-primary btn-sm" href="#" role="button">DOWNLOAD</a>-->
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#downloadModal">DOWNLOAD</button>
+                            </div>
+                        </div>
+                        <div class="row bottom-panel-left" style="height:48px;">
+                            <div class="col-sm-3" style="text-align:center;">
+                                <b>GAS</b><br /><input id="gas-total" type="text" value="" class="bottom-panel-input" />
+                            </div>
+                            <div class="col-sm-3" style="text-align:center;">
+                                <b>OIL</b><br /><input id="oil-total" type="text" value="" class="bottom-panel-input" />
+                            </div>
+                            <div class="col-sm-3" style="text-align:center;">
+                                <b>WATER</b><br /><input id="water-total" type="text" value="" class="bottom-panel-input" />
+                            </div>
+                            <div class="col-sm-3" style="text-align:center; border-left:solid; border-left-color:lightgray;">
+                                <b>WELLS</b><br /><input id="wells-total" type="text" value="" class="bottom-panel-input" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <h4>TOTAL GAS<br/>(MCF)</h4>
-                        <p>31,866,871</p>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>TOTAL OIL<br/>(BBL)</h4>
-                        <p>26,016,879</p>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>TOTAL WATER<br/>(BBL)</h4>
-                        <p>13,361,693</p>
+                    <div class="col-sm-2">
+                        <div class="row bottom-panel-right">
+                            <div class="col-sm-6 charts-align">
+                                <b>CHARTS</b>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-sm disable-border-radius pin-background-color charts-btn" data-toggle="modal" data-target="#areaModal"><img src="images/Area.png" /></button>
+                                <button type="button" class="btn btn-sm disable-border-radius pin-background-color charts-btn" data-toggle="modal" data-target="#lineModal"><img src="images/Line.png" /></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-info">DOWNLOAD</button>
-            </div>
-            <div class="col-md-4">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-light-blue">AREA CHART</button>
-                    <button type="button" class="btn btn-light-blue">LINE CHART</button>
-                </div>
-            </div>
-        </footer>
+        </div>   
     </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="lineModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Production Totals</h4>
+                </div>
+                <div class="modal-body" id="line-chart-content">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="areaModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Production Totals</h4>
+                </div>
+                <div class="modal-body" id="area-chart-content">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+   
+  
+</div> <!-- /container -->
+
 
 <script type="text/javascript">
 
@@ -1414,7 +1504,12 @@
                 </div>
             </div>
         </div>
-        
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Privacy Policy | Terms & Conditions</p>
+                
+            </div>
+        </footer>
     </div>
 
 
