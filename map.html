@@ -41,6 +41,7 @@
     <script src="js/javascript.util.js"></script>
     <script src="js/jsts.js"></script>
     <script src="js/jquery.multiSelect.js"></script>
+    <script src="js/map/update_functions.js"></script>
     
 </head>
 <body>
@@ -75,11 +76,15 @@
             </div>
         </div>
     </nav>
+    
     <div id="main" class="container-fluid">
-        <div class="row">
-            Main Content Will be soon...
+        <div class="row content-area">
+            <div class="col-sm-12 olMap-container">
+                <div id="olMap"></div>
+            </div>
         </div>
     </div>
+
     <div class="container" id="footer">
         <footer class="row">
             <div class="col-md-6">
@@ -107,17 +112,14 @@
             </div>
             <div class="col-md-4">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-light-blue">AREA CHART</button>
-                    <button type="button" class="btn btn-light-blue">LINE CHART</button>
+                    <button type="button" class="btn btn-light-blue" data-toggle="modal" data-target="#areaModal">AREA CHART</button>
+                    <button type="button" class="btn btn-light-blue" data-toggle="modal" data-target="#lineModal">LINE CHART</button>
                 </div>
             </div>
         </footer>
     </div>
 
 <script type="text/javascript">
-
-
-   // debugger;
 
 
     var currentFilter = 0;
@@ -152,7 +154,7 @@
         $.ajax({
             type: "POST",
             //data: { filterid: currentFilter },
-            url: 'Home/GetFilterId',
+            url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetFilterId',
             async: false,
             success: function (xhr) {
                 //         debugger;
@@ -168,7 +170,7 @@
             dataType: 'json',
             contentType: "application/json",
             data: '{filter: "' + getFilterString() + '"}',
-            url: 'Home/PostFilters',
+            url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/PostFilters',
             success: function (data) {
                 currentFilter = data;
                
@@ -1414,6 +1416,35 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="lineModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Production Totals</h4>
+                    </div>
+                    <div class="modal-body" id="line-chart-content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="areaModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Production Totals</h4>
+                    </div>
+                    <div class="modal-body" id="area-chart-content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
         
     </div>
 
@@ -1433,7 +1464,7 @@
                 $.ajax({
                     type: "POST",
                     data: { oldp: oldp, newp: newp },
-                    url: 'Home/ChangePassword',
+                    url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/ChangePassword',
                     async: false,
                     success: function (xhr) {
 
@@ -1467,7 +1498,7 @@
             $.ajax({
                 type: "POST",
                 //data: { dataid: api, datatype: type },
-                url: 'Home/ChkLogin',
+                url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/ChkLogin',
                 async: false,
                 success: function (xhr) {
 
@@ -1508,7 +1539,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'Home/Token',//'Token',
+                url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/Token',//'Token',
                 data: loginData
             }).done(function (data) {
                 //$("#user").val(data.userName);
@@ -1750,7 +1781,7 @@ right:                                         '-=' + w
             $(function () {
                 $.ajax({
                     type: "POST", //data: { dataid: api, datatype: type },
-                    url: 'Home/IsLogged',
+                    url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/IsLogged',
                     async: false,
                     success: function (xhr) {
 
@@ -1810,7 +1841,7 @@ right:                                         '-=' + w
                 $.ajax({
                     type: "GET",
                     //data: { dataid: api, datatype: type },
-                    url: 'Home/GetCompareResult',
+                    url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetCompareResult',
                     async: false,
                     success: function (xhr) {
 
@@ -1903,70 +1934,6 @@ right:                                         '-=' + w
              });
         }
 
-        function updateCharts(filterKey, divarea, divline) {
-            divarea.html("loading...");
-            divline.html("loading...");
-
-            var param = null;
-            if (filterKey != null)
-                param = {filterKey: filterKey};
-
-            $.getJSON('Home/GetProductionTotals', param)
-             .done(function (result) {
-                 //debugger;
-                 if (result.rows.length > 0) {
-                     var data = new google.visualization.DataTable(result);
-                     var options;
-
-                     options = {
-                         width: 500,
-                         height: 300,
-                         vAxis: { format: 'decimal' }
-                     };
-
-                     var chartarea = new google.visualization.AreaChart(divarea[0]);
-                     chartarea.draw(data, options);
-                     var chartline = new google.visualization.LineChart(divline[0]);
-                     chartline.draw(data, options);
-                 }
-                 else {
-                     divarea.html("<span style=\"color:green\">No production data available</span>");
-                     divline.html("<span style=\"color:green\">No production data available</span>");
-                 }                    
-             })
-             .fail(function (jqxhr, textStatus, error) {
-                 divarea.html("<span style=\"color:red\">Could not access server content!</span>");
-                 divline.html("<span style=\"color:red\">Could not access server content!</span>");
-               //  debugger;
-             });
-        }
-
-        function updateTotalsSum(filterKey, divoil, divgas, divwater, divwells) {
-            divoil.val("");
-            divgas.val("");
-            divwater.val("");
-            divwells.val("");
-
-            var param = null;
-            if (filterKey != null)
-                param = { filterKey: filterKey };
-
-            $.getJSON('Home/GetProductionTotalsSum', param)
-                 .done(function (result) {
-                     //debugger;
-                     if (result.rows.length > 0) {
-
-                         divoil.val(result.rows[0].c[0].v);
-                         divgas.val(result.rows[0].c[1].v);
-                         divwater.val(result.rows[0].c[2].v);
-                         divwells.val(result.rows[0].c[3].v);
-                     }
-                 })
-                 .fail(function (jqxhr, textStatus, error) {
-                    // debugger;
-                 });
-        }
-
         function SaveCompWellId(api, type) {
           //  debugger;
 
@@ -1978,7 +1945,7 @@ right:                                         '-=' + w
             $.ajax({
                 type: "POST",
                 data: { dataid: api, datatype: type },
-                url: 'Home/SaveCompId',
+                url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/SaveCompId',
                 async: false,
                 success: function (xhr) {
 
@@ -2010,7 +1977,7 @@ right:                                         '-=' + w
             $.ajax({
                 type: "POST",
                // data: { data: "x" },
-                url: 'Home/GetCompId',
+                url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetCompId',
                 async: false,
                 success: function (xhr) {
 
@@ -2072,7 +2039,7 @@ right:                                         '-=' + w
             $.ajax({
                 type: "POST",
                 data: { dataid: id, datatype:0 },
-                url: 'Home/SaveCompId',
+                url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/SaveCompId',
                 async: false,
                 success: function (xhr) {
 
@@ -2090,7 +2057,7 @@ right:                                         '-=' + w
             $(document).ready(function () {
 
                 jQuery("#filter").jqGrid({
-                    url: 'Home/GetSearchControlls',
+                    url: 'http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetSearchControlls',
                     datatype: "json",
                     colNames: ["id", "Filter"],
                     colModel: [
