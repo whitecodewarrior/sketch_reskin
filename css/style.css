@@ -9,6 +9,10 @@ body .container {
 	height: 80px;
 }
 
+#header.navbar {
+	background-color: white;
+}
+
 .navbar.navbar-fixed-top li {
 	border-right: none;
 }

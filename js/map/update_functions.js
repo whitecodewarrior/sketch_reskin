@@ -8,7 +8,7 @@ function updateCharts(filterKey, divarea, divline) {
     if (filterKey != null)
         param = {filterKey: filterKey};
 
-    $.getJSON('http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetProductionTotals', param)
+    $.getJSON('home/GetProductionTotals', param)
      .done(function (result) {
          //debugger;
          if (result.rows.length > 0) {
@@ -48,7 +48,7 @@ function updateTotalsSum(filterKey, divoil, divgas, divwater, divwells) {
     if (filterKey != null)
         param = { filterKey: filterKey };
 
-    $.getJSON('http://gatewaybeta.gwpc.org/GatewayWeb/Home/GetProductionTotalsSum', param)
+    $.getJSON('home/GetProductionTotalsSum', param)
          .done(function (result) {
              //debugger;
              if (result.rows.length > 0) {
